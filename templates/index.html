@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SamvedanSoch AI</title>
+    <div class="ai-badge">
+    Powered by NLP • Clustering • Sentiment AI
+</div>
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+</head>
+
+<body>
+
+    <div class="background-glow"></div>
+
+    <div class="container">
+
+        <div class="hero-section">
+
+            <h1>🧠 SamvedanSoch AI 🧠 </h1>
+
+            <p>Intelligent Multi-Source News Analysis & Sentiment Detection Platform</p>
+
+        </div>
+
+        <form method="POST" class="search-form">
+
+            <input type="text"
+                   name="topic"
+                   placeholder="Search AI, Crypto, Robotics..."
+                   required>
+
+            <button type="submit">Analyze</button>
+
+        </form>
+
+        {% for cluster in clusters %}
+
+        <div class="cluster-box">
+
+            <div class="cluster-header">
+
+                <h2>⚡ Cluster {{ cluster.cluster_id }}</h2>
+
+                {% if cluster.bias %}
+                    <span class="bias">⚠ Bias Detected</span>
+                {% else %}
+                    <span class="safe">✅ Similar Coverage</span>
+                {% endif %}
+
+            </div>
+
+            {% for article in cluster.articles %}
+
+            <div class="article-box">
+
+                <h3>{{ article.title }}</h3>
+
+                <div class="meta-row">
+
+                    <p class="source">📰 {{ article.source }}</p>
+
+                    <p class="polarity">
+                        Polarity: {{ article.polarity }}
+                    </p>
+
+                </div>
+
+                <p class="description">
+
+                    {{ article.description }}
+
+                </p>
+
+                <div class="sentiment-box">
+
+                    <span class="sentiment-label">
+
+                        Sentiment
+
+                    </span>
+
+                    <span class="sentiment {{ article.sentiment.lower() }}">
+
+                        {{ article.sentiment }}
+
+                    </span>
+
+                </div>
+
+            </div>
+
+            {% endfor %}
+
+        </div>
+
+        {% endfor %}
+
+    </div>
+
+</body>
+
+</html>
